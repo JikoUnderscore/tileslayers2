@@ -1,7 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #undef main
-#include <fmt/format.h>
 
 #include <expected>
 #include <iostream>
