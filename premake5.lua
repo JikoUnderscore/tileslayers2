@@ -41,8 +41,18 @@ project "tileslayers2"
         filter { "system:windows", "configurations:Debug" }
             runtime "Debug"
             symbols "On"
-            links { "SDL2-staticd", "Setupapi", "winmm", "imm32", "version", "fmtd" }
-            libdirs { "$(VCPKG_ROOT)/installed/x64-windows-static/debug/lib/manual-link", "$(VCPKG_ROOT)/installed/x64-windows-static/debug/lib" }
+            links { 
+                "SDL2-staticd", 
+                "SDL2_image-staticd", 
+                "SDL2maind", 
+                "SDL2d", 
+                "SDL2_imaged", 
+                "Setupapi", "winmm", "imm32", "version", "fmtd" 
+            }
+            libdirs { 
+                "$(VCPKG_ROOT)/installed/x64-windows-static/debug/lib/manual-link", "$(VCPKG_ROOT)/installed/x64-windows-static/debug/lib",
+                "$(VCPKG_ROOT)/installed/x64-windows/debug/lib/manual-link", "$(VCPKG_ROOT)/installed/x64-windows/debug/lib"
+            }
             buildoptions "/MTd /interface /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 /permissive- /W4"
             
 
@@ -50,7 +60,17 @@ project "tileslayers2"
 			exceptionhandling ("Off")
             runtime "Release"
 			flags { "LinkTimeOptimization" }
-            links { "SDL2-static", "Setupapi", "winmm", "imm32", "version", "fmt" }
-            libdirs { "$(VCPKG_ROOT)/installed/x64-windows-static/lib/manual-link", "$(VCPKG_ROOT)/installed/x64-windows-static/lib" }
+            links { 
+                "SDL2-static", 
+                "SDL2_image-static", 
+                "SDL2main", 
+                "SDL2", 
+                "SDL2_image", 
+                "Setupapi", "winmm", "imm32", "version", "fmt"
+            }
+            libdirs { 
+                "$(VCPKG_ROOT)/installed/x64-windows-static/lib/manual-link", "$(VCPKG_ROOT)/installed/x64-windows-static/lib",
+                "$(VCPKG_ROOT)/installed/x64-windows/lib/manual-link", "$(VCPKG_ROOT)/installed/x64-windows/lib" 
+            }
             optimize "Speed"
             buildoptions "/MT /interface /w14242 /w14254 /w14263 /w14265 /w14287 /we4289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14619 /w14640 /w14826 /w14905 /w14906 /w14928 /permissive- /W4"
