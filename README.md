@@ -2,7 +2,7 @@
 
 ### **vspkg linking for SDL required**
 run `vcpkg install sdl2:x64-windows-static sdl2-image:x64-windows-static`   
-OR 
+OR   
 run `vcpkg install sdl2:x64-windows sdl2-image:x64-windows`   
 
 
