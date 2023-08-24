@@ -92,10 +92,10 @@ template <typename T>
 inline auto gb_forward(typename gbRemoveReference<T>::Type&& t) -> T&& {
     return static_cast<T&&>(t);
 }
-template <typename T>
-inline auto gb_move(T&& t) -> T&& {
-    return static_cast<typename gbRemoveReference<T>::Type&&>(t);
-}
+// template <typename T>
+// inline auto gb_move(T&& t) -> T&& {
+//     return static_cast<typename gbRemoveReference<T>::Type&&>(t);
+// }
 
 template <typename F>
 struct gbprivDefer {

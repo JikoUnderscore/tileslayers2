@@ -365,6 +365,7 @@ FodyWeavers.xsd
 
 .idea/
 .vscode/
+.vs/
 target/
 /tileslayers2/tileslayers2.vcxproj
 /tileslayers2/tileslayers2.vcxproj.filters
