@@ -8,6 +8,13 @@
 
 
 namespace CORE {
+
+
+
+
+
+
+
 struct KeyboardState {
     std::span<const u8> state;
 
@@ -27,6 +34,8 @@ struct Vector2f {
 
     explicit  Vector2f(const f32 x, const f32 y);
 };
+
+
 
 struct FpsCap {
     u32 m_frame_delay;

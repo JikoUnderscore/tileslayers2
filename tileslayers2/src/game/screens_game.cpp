@@ -1,43 +1,13 @@
 #include "screens.h"
+#include "core.h"
 
 namespace CORE {
 
 
-fn GameStatePersistent::init() noexcept -> GameStatePersistent {
-    return GameStatePersistent{
-        .is_game_running = true,
-        .curent_screen = ScreensID::StartMenu,
-        .pla = PLayer::init(0, 0),
-        .camera = Camera{ .offset_float = Vector2f::zero() },
-
-    };
-}
 
 
-fn TileFloorRAII::init(Renderer const& corr) noexcept -> TileFloorRAII {
-    auto v{ std::vector<Vector2f>() };
-    v.reserve(N_OF_TILES * N_OF_TILES);
-
-    for (size_t y = 0; y < N_OF_TILES; y++) {
-
-        for (size_t x = 0; x < N_OF_TILES; x++) {
-            v.push_back(Vector2f::init(f32(x * W), f32(y * H)));
-        }
-    }
-    let tex{ *corr.load_texture_from_file("./assets/woodbing.png") };
-    let tex2{ *corr.load_texture_from_file("./assets/woodbinginverted.png") };
 
 
-    return TileFloorRAII{
-        .tiles = std::move(v),
-        .tex_dark = tex,
-        .tex_light = tex2,
-    };
-}
-
-TileFloorRAII::~TileFloorRAII() noexcept {
-    this->tex_dark.deinit();
-}
 
 
 /// has no `noexept` it will return a std::expecter in the future.
@@ -70,7 +40,7 @@ fn level_one_screen(Renderer& corr, GameStatePersistent& game)->void {
 
 
     auto tilefloor{ TileFloorRAII::init(corr) };
-
+    // auto 
 
     let keyboard{ KeyboardState::init() };
     i32 mouse_x{};
@@ -87,8 +57,19 @@ fn level_one_screen(Renderer& corr, GameStatePersistent& game)->void {
                     is_running_screen = false;
                     game.is_game_running = false;
                 } break;
-                    // case event::KeyDown: {
-                    // }
+                case event::KeyDown: {
+                    switch (e.key.keysym.scancode)
+                    {
+                    case SDL_Scancode::SDL_SCANCODE_SPACE:{
+                        printf("spcase pressed\n");
+
+                    }break;
+                    
+                    default:
+                        break;
+                    }
+
+                } break;
 
                 case event::MouseMotion: {
                     mouse_x = e.motion.x;

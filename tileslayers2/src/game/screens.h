@@ -1,10 +1,10 @@
 #pragma once
+#include <vector>
+
 #include "./../engine/render.h"
 #include "./../engine/events.h"
-
 #include "./../defines.h"
 
-#include <vector>
 
 
 namespace CORE {
@@ -12,7 +12,6 @@ enum class ScreensID {
     StartMenu,
     FirstLevel,
 };
-
 
 struct GameStatePersistent {
     bool is_game_running;

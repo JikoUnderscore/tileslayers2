@@ -1,4 +1,5 @@
 #include "core.h"
+#include "screens.h"
 #include "./../engine/render.h"
 
 
@@ -18,19 +19,22 @@ fn KeyboardState::is_scancode_pressed(this KeyboardState const& self, const SDL_
     return self.state[static_cast<usize>(sc)] != 0;
 }
 
- Vector2f::Vector2f() : x(0.0), y(0.0) {
+// empty constructor so the values can be "uninitialized" and not set to for example "0.0" on every call
+Vector2f::Vector2f() {
 }
 
- fn Vector2f::zero()->Vector2f {
-    return Vector2f();
+fn Vector2f::zero()->Vector2f {
+    return Vector2f(0.0, 0.0);
 }
 
- fn Vector2f::init(const f32 x, const f32 y) noexcept -> Vector2f {
+fn Vector2f::init(const f32 x, const f32 y) noexcept -> Vector2f {
     return Vector2f(x, y);
 }
 
- Vector2f::Vector2f(const f32 x, const f32 y) : x(x), y(y) {
+Vector2f::Vector2f(const f32 x, const f32 y) : x(x), y(y) {
 }
+
+
 
 
 fn FpsCap::init(const u32 fps_cap) noexcept -> FpsCap {
@@ -67,36 +71,33 @@ fn PLayer::init(const f32 x, const f32 y)->PLayer {
 }
 
 
-    fn Camera::folow_player(this Camera& self, Vector2f& player_pos, Vector2f& map_pos, const i32 mouse_x, const i32 mouse_y) noexcept -> void {
-        i32 mouse_pos_x{ mouse_x - (LOGICAL_RES_1280 / 2) - (PLayer::WIDTH / 2) };
-        i32 mouse_pos_y{ mouse_y - (LOGICAL_RES_720 / 2) - (PLayer::HEIGHT / 2) };
+fn Camera::folow_player(this Camera& self, Vector2f& player_pos, Vector2f& map_pos, const i32 mouse_x, const i32 mouse_y) noexcept -> void {
+    i32 mouse_pos_x{ mouse_x - (LOGICAL_RES_1280 / 2) - (PLayer::WIDTH / 2) };
+    i32 mouse_pos_y{ mouse_y - (LOGICAL_RES_720 / 2) - (PLayer::HEIGHT / 2) };
 
-        if (mouse_pos_x < -MOUSE_MOVE_LIMIT_X) {
-            mouse_pos_x = -MOUSE_MOVE_LIMIT_X;
-        }
-        else if (mouse_pos_x > MOUSE_MOVE_LIMIT_X) {
-            mouse_pos_x = MOUSE_MOVE_LIMIT_X;
-        }
-        if (mouse_pos_y < -MOUSE_MOVE_LIMIT_Y) {
-            mouse_pos_y = -MOUSE_MOVE_LIMIT_Y;
-        }
-        else if (mouse_pos_y > MOUSE_MOVE_LIMIT_Y) {
-            mouse_pos_y = MOUSE_MOVE_LIMIT_Y;
-        }
-
-        self.offset_float.x += player_pos.x - self.offset_float.x - (LOGICAL_RES_1280 / 2) + mouse_pos_x;
-        self.offset_float.y += player_pos.y - self.offset_float.y - (LOGICAL_RES_720 / 2) + mouse_pos_y;
-
-        // const i32 offset_int_x = static
-        player_pos.x = player_pos.x - self.offset_float.x;
-        player_pos.y = player_pos.y - self.offset_float.y;
-
-        map_pos.x += -self.offset_float.x;
-        map_pos.y += -self.offset_float.y;
+    if (mouse_pos_x < -MOUSE_MOVE_LIMIT_X) {
+        mouse_pos_x = -MOUSE_MOVE_LIMIT_X;
+    }
+    else if (mouse_pos_x > MOUSE_MOVE_LIMIT_X) {
+        mouse_pos_x = MOUSE_MOVE_LIMIT_X;
+    }
+    if (mouse_pos_y < -MOUSE_MOVE_LIMIT_Y) {
+        mouse_pos_y = -MOUSE_MOVE_LIMIT_Y;
+    }
+    else if (mouse_pos_y > MOUSE_MOVE_LIMIT_Y) {
+        mouse_pos_y = MOUSE_MOVE_LIMIT_Y;
     }
 
+    self.offset_float.x += player_pos.x - self.offset_float.x - (LOGICAL_RES_1280 / 2) + mouse_pos_x;
+    self.offset_float.y += player_pos.y - self.offset_float.y - (LOGICAL_RES_720 / 2) + mouse_pos_y;
 
+    // const i32 offset_int_x = static
+    player_pos.x = player_pos.x - self.offset_float.x;
+    player_pos.y = player_pos.y - self.offset_float.y;
 
+    map_pos.x += -self.offset_float.x;
+    map_pos.y += -self.offset_float.y;
+}
 
 
 } // namespace CORE
