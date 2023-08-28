@@ -373,3 +373,4 @@ target/
 *.sln
 tileslayers2.sln
 build.ps1
+brelease.ps1
