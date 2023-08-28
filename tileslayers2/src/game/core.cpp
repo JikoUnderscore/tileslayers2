@@ -19,9 +19,7 @@ fn KeyboardState::is_scancode_pressed(this KeyboardState const& self, const SDL_
     return self.state[static_cast<usize>(sc)] != 0;
 }
 
-// empty constructor so the values can be "uninitialized" and not set to for example "0.0" on every call
-Vector2f::Vector2f() {
-}
+Vector2f::Vector2f() = default;
 
 fn Vector2f::zero()->Vector2f {
     return Vector2f(0.0, 0.0);
@@ -104,8 +102,8 @@ fn Camera::folow_player(this Camera& self, Vector2f& player_pos, Vector2f& map_p
     map_pos.x += -self.offset_float.x;
     map_pos.y += -self.offset_float.y;
 }
-Timer::Timer() {
-}
+Timer::Timer() = default;
+
 Timer::Timer(const f32 frenclency_ms, const f32 end_time_ms) : frenclency_ms(frenclency_ms), end_time_ms(end_time_ms) {
 }
 
@@ -128,14 +126,13 @@ fn Timer::update(this Timer& self, const f32 dt) noexcept -> void {
 }
 
 
-Bullet::Bullet() {
-}
-Bullet::Bullet(const f32 x, const f32 y, const f32 dx, const f32 dy) : pos(Vector2f(x, y)), dx(dx), dy(dy),timer(Timer(0.01F, 2.0)) {
+Bullet::Bullet() = default;
+Bullet::Bullet(const f32 dx, const f32 dy) : dx(dx), dy(dy) {
 }
 
 
-fn Bullet::init(const f32 x, const f32 y, const f32 dx, const f32 dy) noexcept -> Bullet {
-    return Bullet(x, y, dx, dy);
+fn Bullet::init(const f32 dx, const f32 dy) noexcept -> Bullet {
+    return Bullet( dx, dy);
 }
 
 

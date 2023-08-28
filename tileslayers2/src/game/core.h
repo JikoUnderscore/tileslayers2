@@ -76,18 +76,18 @@ struct Timer {
 
 
 struct Bullet {
-    Vector2f pos;
+    // Vector2f pos;
     f32 dx;
     f32 dy;
-    Timer timer;
+    // Timer timer;
 
     static const constexpr i32 SIZE = 20;
 
     Bullet();
-    Bullet(f32 x, f32 y, f32 dx, f32 dy);
+    Bullet( f32 dx, f32 dy);
 
 
-    static_fn init(f32 x, f32 y, f32 dx, f32 dy) noexcept -> Bullet;
+    static_fn init( f32 dx, f32 dy) noexcept -> Bullet;
 };
 
 
