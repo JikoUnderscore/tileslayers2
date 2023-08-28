@@ -23,17 +23,17 @@ int main() {
     }
     defer((*corr_ok).deinit());
 
-    let ok{ CORE::Renderer::init_image() };
-    if (not ok) {
-        PrintAndRerunErr(corr_ok.error());
+    let renderer_ok{ CORE::Renderer::init_image() };
+    if (not renderer_ok) {
+        PrintAndRerunErr(renderer_ok.error());
     }
 
 
     auto game{ CORE::GameStatePersistent::init() };
 
-    auto rendr_infot{ SDL_RendererInfo() };
-    let out{ SDL_GetRendererInfo(corr_ok->raw_renderer, &rendr_infot) };
-    printf("%d = %s\n", out, rendr_infot.name);
+    // auto rendr_infot{ SDL_RendererInfo() };
+    // let out{ SDL_GetRendererInfo(corr_ok->raw_renderer, &rendr_infot) };
+    // printf("%d = %s\n", out, rendr_infot.name);
 
 
     // fmt::formatter<const GLubyte*> a ;
