@@ -372,3 +372,4 @@ target/
 /tileslayers2/tileslayers2.vcxproj.user
 *.sln
 tileslayers2.sln
+build.ps1
