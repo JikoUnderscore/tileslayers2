@@ -2,6 +2,7 @@
 
 #include "./../engine/render.h"
 #include "./../engine/events.h"
+#include "./../engine/wrappers.h"
 #include "./../defines.h"
 
 
@@ -19,11 +20,12 @@ fn GameStatePersistent::init() noexcept -> GameStatePersistent {
 
 TileFloorRAII::~TileFloorRAII() noexcept {
     this->tex_dark.deinit();
+    this->tex_light.deinit();
 }
 
 
 fn TileFloorRAII::init(Renderer const& corr) noexcept -> TileFloorRAII {
-    auto v{ std::vector<Vector2f>() };
+    auto v{ Vec<Vector2f>() };
     v.reserve(N_OF_TILES * N_OF_TILES);
 
     for (size_t y = 0; y < N_OF_TILES; y++) {

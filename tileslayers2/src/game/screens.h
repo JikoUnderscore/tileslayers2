@@ -3,6 +3,7 @@
 
 #include "./../engine/render.h"
 #include "./../engine/events.h"
+#include "./../engine/wrappers.h"
 #include "./../defines.h"
 
 
@@ -26,7 +27,7 @@ struct GameStatePersistent {
 
 
 struct TileFloorRAII {
-    std::vector<Vector2f> tiles;
+    Vec<Vector2f> tiles;
     Texture tex_dark;
     Texture tex_light;
 
