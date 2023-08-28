@@ -1,3 +1,6 @@
+#include "./../../../vendor/entt/entity/registry.hpp"
+
+
 #include "./../engine/wrappers.h"
 #include "core.h"
 #include "screens.h"
@@ -39,14 +42,18 @@ fn level_one_screen(Renderer& corr, GameStatePersistent& game)->void {
 
 
     auto tilefloor{ TileFloorRAII::init(corr) };
-    auto bullets{ Vec<Bullet>() };
-    auto bullets_cleanup{ Vec<usize>() };
+    // auto bullets{ Vec<Bullet>() };
+    // auto bullets_cleanup{ Vec<entt::entity>() };
 
 
     let keyboard{ KeyboardState::init() };
     i32 mouse_x{};
     i32 mouse_y{};
     static constexpr f32 RADIAN_90_DEGREES{ 90.0F * (f32(std::numbers::pi) / 180.0F) };
+
+
+    auto world_reg{ entt::registry() };
+    auto bullets{ world_reg.view<Bullet, Vector2f, Timer>() };
 
 
     while (is_running_screen) {
@@ -95,7 +102,14 @@ fn level_one_screen(Renderer& corr, GameStatePersistent& game)->void {
 
                                 printf("normal_x %f normal_y %f dist %f\n", normal.x, normal.y, dist);
 
-                                bullets.emplace_back(center_x, center_y, normal.x, normal.y);
+
+                                let entity{ world_reg.create() };
+                                world_reg.emplace<Bullet>(entity, normal.x, normal.y);
+                                world_reg.emplace<Vector2f>(entity, center_x, center_y);
+                                world_reg.emplace<Timer>(entity, 0.01F, 2.0F);
+
+
+                                // bullets.emplace_back(center_x, center_y, normal.x, normal.y);
                             }
 
 
@@ -179,29 +193,34 @@ fn level_one_screen(Renderer& corr, GameStatePersistent& game)->void {
             corr.copy_player(*pla_tex, game.pla.position);
 
 
-            for (usize i = 0; i < bullets.size(); ++i) {
-                bullets[i].pos.x += ((300.0F * bullets[i].dx) * fps.dt) - game.camera.offset_float.x;
-                bullets[i].pos.y += ((300.0F * bullets[i].dy) * fps.dt) - game.camera.offset_float.y;
-                bullets[i].timer.update(fps.dt);
+            for (auto&& [entt, bullet, vec2f, timer] : bullets.each()) {
+                vec2f.x += ((300.0F * bullet.dx) * fps.dt) - game.camera.offset_float.x;
+                vec2f.y += ((300.0F * bullet.dy) * fps.dt) - game.camera.offset_float.y;
+                timer.update(fps.dt);
                 // printf("bullets[i].timer{ %f , %f}\n", bullets[i].timer.frenclency_ms, bullets[i].timer.end_time_ms);
                 // printf("bullets[i].pos{ %f , %f}\n", bullets[i].pos.x, bullets[i].pos.y);
-                if (bullets[i].timer.frenclency_ms == 0.0F) {
-                    bullets_cleanup.push_back(i);
-                }
 
 
                 // printf("bullet {x %F y %F}\n", bullets[i].pos.x, bullets[i].pos.y);
 
 
-                corr.copy(tilefloor.tex_light, bullets[i].pos, Vector2f::zero());
+                corr.copy(tilefloor.tex_light, vec2f, Vector2f::zero());
+
+
+                if (timer.frenclency_ms == 0.0F) {
+                    // Todo: check if this is a good idea. To delete it in the loop?!?!?
+                    world_reg.remove<Bullet, Vector2f, Timer>(entt);
+                    // bullets_cleanup.push_back(entt);
+                }
             }
 
-            for (auto i : bullets_cleanup) {
-                bullets.swap_remove(i);
-            }
-            if (not bullets_cleanup.empty()) {
-                bullets_cleanup.clear();
-            }
+
+            // for (auto&& i : bullets_cleanup) {
+            //     world_reg.remove<Bullet, Vector2f, Timer>(i);
+            // }
+            // if (not bullets_cleanup.empty()) {
+            //     bullets_cleanup.clear();
+            // }
 
 
             corr.present();
