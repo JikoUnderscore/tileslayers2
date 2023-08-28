@@ -87,6 +87,41 @@ fn Renderer::copy_player(this Renderer const& self, const Texture texture, const
     (void)SDL_RenderCopy(self.raw_renderer, texture.raw_texure, nullptr, &dstrect);
 }
 
+
+
+
+
+// maybe i dont need src paramiter
+fn Renderer::copy(this Renderer const& self, const Texture texture, const Vector2f pos, const Vector2f src)  noexcept -> void {
+    let dstrect{
+        SDL_Rect{
+        .x = static_cast<i32>(pos.x),
+        .y = static_cast<i32>(pos.y),
+        .w = Bullet::SIZE,
+        .h = Bullet::SIZE,
+        },
+    };
+
+    let srcrect{
+        SDL_Rect{
+        .x = static_cast<i32>(src.x),
+        .y = static_cast<i32>(src.y),
+        .w = Bullet::SIZE,
+        .h = Bullet::SIZE,
+        },
+    };
+
+
+
+    (void)SDL_RenderCopy(self.raw_renderer, texture.raw_texure, &srcrect, &dstrect);
+}
+
+
+
+
+
+
+
 fn Renderer::copy(this Renderer const& self, const Texture texture) noexcept -> void {
     (void)SDL_RenderCopy(self.raw_renderer, texture.raw_texure, nullptr, nullptr);
 }

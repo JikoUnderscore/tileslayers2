@@ -46,7 +46,8 @@ struct Renderer {
 
     fn copy_with_size(this Renderer const& self, const Texture texture, const Vector2f pos, const i32 width, const i32 height) noexcept -> void;
 
-    fn copy_player(this Renderer const& self, const Texture texture, const Vector2f pos /*Vecotr2 src*/) noexcept -> void ;
+    fn copy_player(this Renderer const& self, const Texture texture, const Vector2f pos ) noexcept -> void ;
+    fn copy(this Renderer const& self, const Texture texture, const Vector2f pos, const Vector2f src) noexcept -> void ;
 
     fn copy(this Renderer const& self, const Texture texture) noexcept -> void ;
 
