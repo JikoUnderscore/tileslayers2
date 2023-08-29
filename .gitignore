@@ -374,3 +374,5 @@ target/
 tileslayers2.sln
 build.ps1
 brelease.ps1
+analizer
+tileslayers2/assets/
