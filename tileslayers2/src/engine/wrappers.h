@@ -7,6 +7,11 @@ template <class T>
 struct Vec {
     std::vector<T> raw_vec;
 
+    constexpr explicit Vec()noexcept: raw_vec(){}
+
+    constexpr explicit Vec(const size_t count)noexcept : raw_vec(count) {
+    }
+
 
     template <class... Valty>
     constexpr decltype(auto) emplace_back(Valty&&... _Val) noexcept {
