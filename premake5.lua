@@ -41,6 +41,8 @@ project "tileslayers2"
         filter { "system:windows", "configurations:Debug" }
             runtime "Debug"
             symbols "On"
+            -- editandcontinue "Off" -- for /Zi
+            -- buildoptions "/fsanitize=address"
             links { 
                 "SDL2-staticd", 
                 "SDL2_image-staticd", 
